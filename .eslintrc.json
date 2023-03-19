@@ -5,10 +5,12 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "standard-with-typescript"
+        "airbnb",
+        "airbnb-typescript"
     ],
     "overrides": [
     ],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module",
@@ -18,5 +20,9 @@
         "react"
     ],
     "rules": {
+        "semi": "off",
+        "@typescript-eslint/semi": "off",
+        "no-underscore-dangle": "off",
+        "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
     }
 }

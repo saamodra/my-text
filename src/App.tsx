@@ -1,41 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import { collection, getDocs } from 'firebase/firestore'
-import logo from './logo.svg'
-import './App.css'
-import { db } from './firebase'
-import { IText } from './interface'
+import React from 'react'
+import { Route, Routes } from 'react-router-dom'
+import Header from 'components/Header'
+import CategoryList from 'pages/Category/List'
+import TextList from 'pages/Text/List'
+import Login from 'pages/Login'
+import * as PageRoutes from 'lib/routes'
 
-function App () {
-  const [texts, setTexts] = useState<IText[]>([])
-
-  async function getDb () {
-    await getDocs(collection(db, 'texts'))
-      .then((snapshot) => {
-        const snapshotTexts: IText[] = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id } as IText))
-        setTexts(snapshotTexts)
-      })
-  }
-
-  useEffect(() => {
-    getDb()
-  }, [])
-
-  return (<div className="App">
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo"/>
-      <p>
-        Edit <code>src/App.tsx</code> and save to reload.
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
-    </header>
-  </div>)
+function App(): JSX.Element {
+  return (
+    <div className="App">
+      <Header />
+      <Routes>
+        <Route path={PageRoutes.loginPageUrl()} element={<Login />} />
+        <Route path={PageRoutes.homePageUrl()} element={<CategoryList />} />
+        <Route path={PageRoutes.textListUrl()} element={<TextList />} />
+      </Routes>
+    </div>
+  )
 }
 
 export default App
