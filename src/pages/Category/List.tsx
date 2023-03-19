@@ -7,7 +7,7 @@ function List(): JSX.Element {
   const [categories, setCategories] = useState<ICategory[]>([])
 
   const getData = async () => {
-    const dbCategories = await getDb('categories')
+    const dbCategories = await getDb({ dbName: 'categories' })
     setCategories(dbCategories)
   }
 

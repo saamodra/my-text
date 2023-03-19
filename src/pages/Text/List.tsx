@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { IText } from 'interfaces'
 import { getDb } from 'lib/fetchAdapter'
 import TextItem from 'components/TextItem'
+import { QueryFieldFilterConstraint, where } from 'firebase/firestore'
+import { useParams } from 'react-router-dom'
 
 function List(): JSX.Element {
+  const { id } = useParams()
   const [texts, setTexts] = useState<IText[]>([])
 
   const getData = async () => {
-    const dbText = await getDb('texts')
+    const filter: QueryFieldFilterConstraint = where('category_id', '==', id)
+    const dbText = await getDb({ dbName: 'texts', filter })
     setTexts(dbText)
   }
 

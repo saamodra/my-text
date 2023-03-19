@@ -1,16 +1,15 @@
 import {
-  collection, getDocs,
+  collection, getDocs, query,
 } from 'firebase/firestore'
+import { IDbSelector } from 'interfaces'
 import db from '../firebase'
 
-export type FetchResponseProps<T = Response> = {
-  data: T | null,
-  error: Error | null
-}
-
-export const getDb = (dbName: string): Promise<any> => {
+// eslint-disable-next-line import/prefer-default-export
+export const getDb = ({ dbName, filter }: IDbSelector): Promise<any> => {
   const dbCollection = collection(db, dbName)
-  return getDocs(dbCollection)
+  const dbQuery = filter ? query(dbCollection, filter) : dbCollection
+
+  return getDocs(dbQuery)
     .then((snapshot) => snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     .catch((err) => err)
 }
