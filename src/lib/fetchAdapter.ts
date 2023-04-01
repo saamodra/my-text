@@ -1,15 +1,62 @@
-import {
-  collection, getDocs, query,
-} from 'firebase/firestore'
-import { IDbSelector } from 'interfaces'
-import db from '../firebase'
+export const API_HOST = 'http://localhost:8000/api'
 
-// eslint-disable-next-line import/prefer-default-export
-export const getDb = ({ dbName, filter }: IDbSelector): Promise<any> => {
-  const dbCollection = collection(db, dbName)
-  const dbQuery = filter ? query(dbCollection, filter) : dbCollection
+export type FetchResponseProps<T = Response> = {
+  result: T | null
+  error: RawResponseError | Error | null
+}
 
-  return getDocs(dbQuery)
-    .then((snapshot) => snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    .catch((err) => err)
+export type RawResponseProps = {
+  response: Response | null
+  error: Error | null
+}
+
+export type RawResponseError = Error & { response?: Response }
+
+const INITIAL_CONFIG = {
+  headers: {
+    'Content-Type': 'application/json',
+  },
+}
+
+export const rawFetch = (
+  url: string,
+  config: RequestInit,
+): Promise<Response> => fetch(url, config)
+
+export const raw = (
+  url: string,
+  config: Object = {},
+): Promise<FetchResponseProps> => fetch(url, config)
+  .then((response) => {
+    if (!response.ok) {
+      const error = new Error(
+        `FetchAdapter::fetch failed to access ${url} with ${response.status}`,
+      ) as RawResponseError
+
+      error.response = response
+      throw error
+    }
+
+    return { result: response, error: null }
+  })
+  .catch((err) => ({ result: null, error: err }))
+
+export const get = (url: string = '', config: Object = {}) => {
+  const options: Object = {
+    method: 'GET',
+    ...INITIAL_CONFIG,
+    ...config,
+  }
+
+  return raw(url, options)
+}
+
+export const post = (url: string = '', config: Object = {}) => {
+  const options: Object = {
+    method: 'POST',
+    ...INITIAL_CONFIG,
+    ...config,
+  }
+
+  return raw(url, options)
 }
