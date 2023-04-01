@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { IText } from 'interfaces'
 import * as FetchAdapter from 'lib/fetchAdapter'
 import TextItem from 'components/TextItem'
 import { useParams } from 'react-router-dom'
 import BottomSheet from 'components/BottomSheet'
 import FloatingButton from 'components/FloatingButton'
+import { AppContext } from 'redux/context'
 
 type TextBottomSheetProps = {
   getData: () => void
@@ -74,7 +75,9 @@ function TextBottomSheet({ getData }: TextBottomSheetProps): JSX.Element {
 
 function List(): JSX.Element {
   const { id } = useParams()
+  const [categoryName, setCategoryName] = useState<string>()
   const [texts, setTexts] = useState<IText[]>([])
+  const { dispatch } = useContext(AppContext)
 
   const getData = async () => {
     const apiUrl = `${FetchAdapter.API_HOST}/categories/${id}`
@@ -82,16 +85,24 @@ function List(): JSX.Element {
     const result = await response.result?.json()
 
     setTexts(result.texts)
+    setCategoryName(result.name)
   }
 
   useEffect(() => {
     getData()
   }, [])
 
+  useEffect(() => {
+    dispatch({
+      type: 'SET_TITLE',
+      payload: categoryName,
+    })
+  }, [categoryName])
+
   return (
     <div className="text-3xl px-1 py-2 font-bold">
       {texts.map((text) => (
-        <TextItem key={text.id} id={text.id} name={text.name} value={text.value} />
+        <TextItem key={text.id} name={text.name} value={text.value} />
       ))}
 
       <TextBottomSheet getData={getData} />

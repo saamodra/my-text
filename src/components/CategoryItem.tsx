@@ -12,7 +12,7 @@ function CategoryItem({ id, name }: CategoryItemProps): JSX.Element {
   return (
     <Link
       to={textListUrl(id)}
-      className="flex justify-between items-center p-3 drop-shadow-sm border-solid border mb-2 text-lg"
+      className="flex justify-between items-center p-3 drop-shadow-sm border-solid border mb-2 text-lg rounded-lg"
     >
       <div className="flex items-center">
         <FiList className="mr-4 text-indigo-500" />

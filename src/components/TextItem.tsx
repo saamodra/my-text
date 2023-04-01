@@ -2,29 +2,18 @@ import React from 'react'
 import { FiCopy, FiList } from 'react-icons/fi'
 
 type TextItemProps = {
-  id: string
   name: string
   value: string
 }
 
-function TextItem({ id, name, value }: TextItemProps): JSX.Element {
-  const showModal = () => {
-    console.log(id)
-  }
-
+function TextItem({ name, value }: TextItemProps): JSX.Element {
   const copyItem = (e: React.SyntheticEvent) => {
     e.stopPropagation()
     navigator.clipboard.writeText(value)
   }
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      onClick={showModal}
-      onKeyDown={showModal}
-      className="flex justify-between items-center w-full p-3 drop-shadow-sm border-solid border mb-2 text-lg"
-    >
+    <div className="flex justify-between items-center w-full p-3 drop-shadow-sm border-solid border mb-2 text-lg">
       <div className="flex items-center">
         <FiList className="mr-4 text-indigo-500" />
         <div className="flex flex-col text-left">

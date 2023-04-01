@@ -75,7 +75,7 @@ function List(): JSX.Element {
   }, [])
 
   return (
-    <div className="text-3xl px-1 py-2 font-bold">
+    <div className="text-3xl px-4 py-3 font-bold">
       {categories.map((text) => (
         <CategoryItem key={text.id} id={text.id} name={text.name} />
       ))}
