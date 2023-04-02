@@ -30,7 +30,8 @@ jobs:
 
     - name: Build project
       run: npm run build
-
+      env:
+        REACT_APP_API_HOST: ${{ secrets.REACT_APP_API_HOST }}
     - name: Upload production-ready build files
       uses: actions/upload-artifact@v2
       with:

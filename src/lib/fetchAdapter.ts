@@ -1,5 +1,3 @@
-export const API_HOST = 'http://localhost:8000/api'
-
 export type FetchResponseProps<T = Response> = {
   result: T | null
   error: RawResponseError | Error | null

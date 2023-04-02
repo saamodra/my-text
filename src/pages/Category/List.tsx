@@ -18,7 +18,7 @@ function CategoryBottomSheet({ getData }: CategoryBottomSheetProps): JSX.Element
   }
 
   const saveData = async () => {
-    const apiUrl = `${FetchAdapter.API_HOST}/categories`
+    const apiUrl = `${process.env.REACT_APP_API_HOST}/api/categories`
     await FetchAdapter.post(apiUrl, {
       body: JSON.stringify({ name }),
     })
@@ -63,7 +63,7 @@ function List(): JSX.Element {
   const [categories, setCategories] = useState<ICategory[]>([])
 
   const getData = async () => {
-    const apiUrl = `${FetchAdapter.API_HOST}/categories`
+    const apiUrl = `${process.env.REACT_APP_API_HOST}/api/categories`
     const response = await FetchAdapter.get(apiUrl)
     const result = await response.result?.json()
 

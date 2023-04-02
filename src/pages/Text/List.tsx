@@ -26,7 +26,7 @@ function TextBottomSheet({ getData }: TextBottomSheetProps): JSX.Element {
   }
 
   const saveData = async () => {
-    const apiUrl = `${FetchAdapter.API_HOST}/texts`
+    const apiUrl = `${process.env.REACT_APP_API_HOST}/api/texts`
     await FetchAdapter.post(apiUrl, {
       body: JSON.stringify({ name, value, category_id: id }),
     })
@@ -80,7 +80,7 @@ function List(): JSX.Element {
   const { dispatch } = useContext(AppContext)
 
   const getData = async () => {
-    const apiUrl = `${FetchAdapter.API_HOST}/categories/${id}`
+    const apiUrl = `${process.env.REACT_APP_API_HOST}/api/categories/${id}`
     const response = await FetchAdapter.get(apiUrl)
     const result = await response.result?.json()
 
