@@ -3,6 +3,7 @@ import { QueryFieldFilterConstraint } from 'firebase/firestore'
 export interface ICategory {
   id: string
   name: string
+  texts: IText[]
   created_at: object
   modified_at: object
 }

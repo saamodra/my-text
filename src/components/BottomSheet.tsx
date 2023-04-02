@@ -1,20 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { HIDE_MODAL } from 'redux/action'
+import { AppContext } from 'redux/context'
 
 type BottomSheetProps = {
   show: boolean
-  toggler: (state: boolean) => void
   children: string | JSX.Element | JSX.Element[]
 }
 
-function BottomSheet({ show, toggler, children }: BottomSheetProps): JSX.Element | null {
+function BottomSheet({ show, children }: BottomSheetProps): JSX.Element | null {
+  const { dispatch } = useContext(AppContext)
   if (!show) return null;
 
   return (
     <div
       role="button"
       tabIndex={0}
-      onClick={() => toggler(!show)}
-      onKeyDown={() => toggler(!show)}
+      onClick={() => dispatch({ type: HIDE_MODAL })}
+      onKeyDown={() => dispatch({ type: HIDE_MODAL })}
       className="h-full fixed bg-zinc-900/[.45] bg-blend-overlay z-10 top-0 left-0 w-full"
     >
       <div

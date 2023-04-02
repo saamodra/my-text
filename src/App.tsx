@@ -2,7 +2,6 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Header from 'components/Header'
 import CategoryList from 'pages/Category/List'
-import TextList from 'pages/Text/List'
 import Login from 'pages/Login'
 import AppProvider from 'redux/context'
 import * as PageRoutes from 'lib/routes'
@@ -15,7 +14,6 @@ function App(): JSX.Element {
         <Routes>
           <Route path={PageRoutes.loginPageUrl()} element={<Login />} />
           <Route path={PageRoutes.homePageUrl()} element={<CategoryList />} />
-          <Route path={PageRoutes.textListUrl()} element={<TextList />} />
         </Routes>
       </div>
     </AppProvider>

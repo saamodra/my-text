@@ -58,3 +58,13 @@ export const post = (url: string = '', config: Object = {}) => {
 
   return raw(url, options)
 }
+
+export const destroy = (url: string = '', config: Object = {}) => {
+  const options: Object = {
+    method: 'DELETE',
+    ...INITIAL_CONFIG,
+    ...config,
+  }
+
+  return raw(url, options)
+}

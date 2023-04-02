@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useMemo, useReducer } from 'react';
 import Reducer from './reducer'
 
 type StoreProps = {
@@ -6,7 +6,9 @@ type StoreProps = {
 }
 
 type InitialStateType = {
-  pageTitle: string;
+  pageTitle: string
+  categoryModal: boolean
+  textModal: boolean
 }
 
 type AppContextType = {
@@ -16,6 +18,8 @@ type AppContextType = {
 
 const initialState = {
   pageTitle: 'Global State',
+  categoryModal: false,
+  textModal: false,
 }
 
 export const AppContext = createContext<AppContextType>({
@@ -25,9 +29,10 @@ export const AppContext = createContext<AppContextType>({
 
 function AppProvider({ children }: StoreProps) {
   const [state, dispatch] = useReducer(Reducer, initialState);
+  const providerValue = useMemo(() => ({ state, dispatch }), [state, dispatch])
 
   return (
-    <AppContext.Provider value={{ state, dispatch }}>
+    <AppContext.Provider value={providerValue}>
       {children}
     </AppContext.Provider>
   )

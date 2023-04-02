@@ -17,7 +17,7 @@ function TextItem({ name, value }: TextItemProps): JSX.Element {
       <div className="flex items-center">
         <FiList className="mr-4 text-indigo-500" />
         <div className="flex flex-col text-left">
-          <h3 className="text-base">{name}</h3>
+          <h3 className="text-base font-medium">{name}</h3>
           <h4 className="text-sm font-normal">{value}</h4>
         </div>
       </div>

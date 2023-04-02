@@ -23,6 +23,7 @@
         "semi": "off",
         "@typescript-eslint/semi": "off",
         "no-underscore-dangle": "off",
-        "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
+        "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
+        "react/require-default-props": "off"
     }
 }

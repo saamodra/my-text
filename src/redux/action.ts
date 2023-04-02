@@ -1,0 +1,4 @@
+export const SET_TITLE = 'SET_TITLE'
+export const HIDE_MODAL = 'HIDE_MODAL'
+export const SHOW_CATEGORY_MODAL = 'SHOW_CATEGORY_MODAL'
+export const SHOW_TEXT_MODAL = 'SHOW_TEXT_MODAL'
