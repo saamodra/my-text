@@ -43,7 +43,13 @@ function CategoryItem({
 
       <div>
         {texts.map((text) => (
-          <TextItem key={text.id} name={text.name} value={text.value} />
+          <TextItem
+            key={text.id}
+            id={text.id}
+            name={text.name}
+            value={text.value}
+            refreshData={refreshData}
+          />
         ))}
       </div>
     </div>
