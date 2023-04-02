@@ -1,4 +1,5 @@
 import React from 'react'
+import toast from 'react-hot-toast'
 import { FiCopy, FiTrash2 } from 'react-icons/fi'
 import * as FetchAdapter from 'lib/fetchAdapter'
 
@@ -19,12 +20,14 @@ function TextItem({
       await FetchAdapter.destroy(apiUrl)
 
       refreshData()
+      toast.success('Text deleted!')
     }
   }
 
   const copyItem = (e: React.SyntheticEvent) => {
     e.stopPropagation()
     navigator.clipboard.writeText(value)
+    toast('Text copied!')
   }
 
   return (

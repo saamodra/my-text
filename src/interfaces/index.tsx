@@ -1,5 +1,3 @@
-import { QueryFieldFilterConstraint } from 'firebase/firestore'
-
 export interface ICategory {
   id: string
   name: string
@@ -15,9 +13,4 @@ export interface IText {
   value: string
   created_at: object
   modified_at: object
-}
-
-export interface IDbSelector {
-  dbName: string
-  filter?: QueryFieldFilterConstraint
 }

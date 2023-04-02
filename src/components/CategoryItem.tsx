@@ -1,8 +1,9 @@
-import { IText } from 'interfaces'
-import React from 'react'
+import React, { useState } from 'react'
+import { toast } from 'react-hot-toast'
 import {
-  FiChevronDown, FiTrash2,
+  FiChevronRight, FiTrash2,
 } from 'react-icons/fi'
+import { IText } from 'interfaces'
 import * as FetchAdapter from 'lib/fetchAdapter'
 import TextItem from './TextItem'
 
@@ -16,19 +17,29 @@ type CategoryItemProps = {
 function CategoryItem({
   id, name, texts, refreshData,
 }: CategoryItemProps): JSX.Element {
-  const deleteCategory = async () => {
+  const [expanded, setExpanded] = useState(false)
+
+  const deleteCategory = async (e: React.SyntheticEvent) => {
+    e.stopPropagation()
     // eslint-disable-next-line no-alert
     if (window.confirm('Are you sure?')) {
       const apiUrl = `${process.env.REACT_APP_API_HOST}/api/categories/${id}`
       await FetchAdapter.destroy(apiUrl)
 
+      toast.success('Successfully deleted!')
       refreshData()
     }
   }
 
   return (
     <div>
-      <div className="flex justify-between items-center p-2 drop-shadow-sm mb-1 text-lg">
+      <div
+        role="button"
+        tabIndex={0}
+        className="flex justify-between items-center p-2 drop-shadow-sm mb-1 text-lg w-full"
+        onClick={() => setExpanded(!expanded)}
+        onKeyDown={() => setExpanded(!expanded)}
+      >
         <div className="flex items-center font-medium">
           {name}
         </div>
@@ -37,11 +48,11 @@ function CategoryItem({
           <button type="button" onClick={deleteCategory}>
             <FiTrash2 />
           </button>
-          <FiChevronDown />
+          <FiChevronRight className={`transition-transform ease-in-out duration-200 ${expanded ? 'rotate-90' : ''}`} />
         </div>
       </div>
 
-      <div>
+      <div className={expanded ? '' : 'hidden'}>
         {texts.map((text) => (
           <TextItem
             key={text.id}

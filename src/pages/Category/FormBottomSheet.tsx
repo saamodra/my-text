@@ -1,10 +1,12 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import React, { useContext, useState } from 'react'
+import { toast } from 'react-hot-toast'
 import * as FetchAdapter from 'lib/fetchAdapter'
 import BottomSheet from 'components/BottomSheet'
 import { AppContext } from 'redux/context'
 import { HIDE_MODAL } from 'redux/action'
 import { ICategory } from 'interfaces'
+import { RiLoader4Fill } from 'react-icons/ri'
 
 type FormBottomSheetProps = {
   show: boolean
@@ -20,6 +22,7 @@ function FormBottomSheet({
   const [categoryId, setCategoryId] = useState(categories[0]?.id)
   const [name, setName] = useState('')
   const [value, setValue] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const refresh = () => {
     refreshData()
@@ -58,9 +61,14 @@ function FormBottomSheet({
 
   const isText = type === 'text'
 
-  const save = () => {
-    if (isText) return saveText();
-    return saveCategory()
+  const save = async () => {
+    setLoading(true)
+
+    if (isText) await saveText();
+    else await saveCategory()
+
+    setLoading(false)
+    toast.success('Successfully saved!')
   }
 
   return (
@@ -72,6 +80,7 @@ function FormBottomSheet({
               onChange={handleCategoryChange}
               className="text-sm font-normal py-2 px-4 w-full border-b border-indigo-400 bg-white"
             >
+              <option hidden>Choose Category</option>
               {categories?.map((category) => (
                 <option key={category.id} value={category.id}>{category.name}</option>
               ))}
@@ -107,8 +116,13 @@ function FormBottomSheet({
           <button
             type="button"
             onClick={save}
-            className="py-2 px-4 bg-primary text-white text-sm rounded-lg"
+            className="py-2 px-4 bg-primary text-white text-sm rounded-lg flex items-center gap-1"
           >
+            <>
+              {loading && (
+                <RiLoader4Fill className="animate-spin" />
+              )}
+            </>
             Save
           </button>
         </div>
